@@ -1,0 +1,17 @@
+{
+  "name": "nodemqtt",
+  "version": "1.0.0",
+  "description": "node con mqtt, mosquito y placa nodemcu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gonzalo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsdom": "^17.0.0",
+    "mqtt": "^4.2.8",
+    "socket.io": "^4.2.0"
+  }
+}
