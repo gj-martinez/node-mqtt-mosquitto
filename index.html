@@ -5,49 +5,73 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Document</title>
+    <title>IOT</title>
 </head>
 <body>
-    <div class="container">
-        <h3>Node con chartjs y mqtt</h3>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand">
+            <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            Plataforma IOT
+          </a>
+        </div>
+      </nav>
+    <div class="container-lg">            
+        <div class="row" style="margin-top:20px; margin-bottom:20px">
+            <div class="col-3">
+                <select class="form-select" aria-label="Default select example" id="tipografico" onchange="agregarGrafico">
+                    <option selected>Seleccionar tipo de Graficos</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-5 border border-danger" >
+            <div id="canvas" class="col-5" >
                 <canvas id="myChart"></canvas>
             </div>
             <div class="col-1"></div>
-            <div class="col-5 border border-danger">
+            <div id="canvas1" class="col-5">
                 <canvas id="myChart1"></canvas>
             </div>
         </div>
         <br>
         <div class="row">
-            <div class="col-5 border border-danger" >
+            <div id="canvas2" class="col-5 " >
                 <canvas id="myChart2"></canvas>
             </div>
             <div class="col-1"></div>
-            <div class="col-5 border border-danger">
+            <div id="canvas3" class="col-5 ">
                 <canvas id="myChart3"></canvas>
             </div>
         </div>
         <br>
         <div class="row">
-            <div class="col-5 border border-danger" >
+            <div id="canvas4" class="col-5 " >
                 <canvas id="myChart4"></canvas>
             </div>
             <div class="col-1"></div>
-            <div class="col-5 border border-danger">
+            <div id="canvas5" class="col-5 ">
                 <canvas id="myChart5"></canvas>
             </div>
         </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        $("#canvas").hide();
+        $("#canvas1").hide();
+        $("#canvas2").hide();
+        $("#canvas3").hide();
+        $("#canvas4").hide();
+        $("#canvas5").hide();
+
         const socket = io();
         let count = 0;
 
@@ -61,6 +85,164 @@
             myChart.update();
         });
 
+        document.querySelector('#tipografico').addEventListener("change",agregarGrafico);
+
+        let idCanvas = 0;
+        function agregarGrafico(event) {
+            const value = event.target.value
+
+            console.log(value)
+            console.log("------------------")
+            console.log(idCanvas)
+
+
+            switch (idCanvas) {
+                case 0:
+                        $("#canvas").show();
+                        $('#canvas').addClass('border border-danger');
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Temperatura'],
+                            datasets: [{
+                                label: 'Temp',
+                                data: [],
+                                backgroundColor: [
+                                    'rgba(54, 162, 235, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(54, 162, 235, 1)'
+                                ]
+                            }]
+                        },
+                        options: {}
+                    });
+                    idCanvas ++;
+                    break;
+                case 1:
+                        $("#canvas1").show();
+                        $('#canvas1').addClass('border border-danger');
+                        var ctx1 = document.getElementById('myChart1').getContext('2d');
+                        var myChart = new Chart(ctx1, {
+                        type: 'line',
+                        data: {
+                            labels: ['Temperatura'],
+                            datasets: [{
+                                label: 'Temp',
+                                data: [],
+                                backgroundColor: [
+                                    'rgba(255, 0, 0, 1)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 0, 0, 0.5)'
+                                ]
+                            }]
+                        },
+                        options: {}
+                    });
+                    idCanvas ++;
+                    break;
+                case 2:
+                        $("#canvas2").show();
+                        $('#canvas2').addClass('border border-danger');
+                        var ctx2 = document.getElementById('myChart2').getContext('2d');
+                        var myChart = new Chart(ctx2, {
+                            type: 'line',
+                            data: {
+                                labels: ['Temperatura'],
+                                datasets: [{
+                                    label: 'Temp',
+                                    data: [],
+                                    backgroundColor: [
+                                        'rgba(255, 0, 0, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 0, 0, 0.5)'
+                                    ]
+                                }]
+                            },
+                            options: {}
+                        });
+                        idCanvas ++;
+                    break;
+                case 3:
+                        $("#canvas3").show();
+                        $('#canvas3').addClass('border border-danger');
+                        var ctx3 = document.getElementById('myChart3').getContext('2d');
+                        var myChart = new Chart(ctx3, {
+                            type: 'line',
+                            data: {
+                                labels: ['Temperatura'],
+                                datasets: [{
+                                    label: 'Temp',
+                                    data: [],
+                                    backgroundColor: [
+                                        'rgba(255, 0, 0, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 0, 0, 0.5)'
+                                    ]
+                                }]
+                            },
+                            options: {}
+                        });
+                        idCanvas ++;
+                    break;
+                case 4:
+                        $("#canvas4").show();
+                        $('#canvas4').addClass('border border-danger');
+                        var ctx4 = document.getElementById('myChart4').getContext('2d');
+                        var myChart = new Chart(ctx4, {
+                            type: 'line',
+                            data: {
+                                labels: ['Temperatura'],
+                                datasets: [{
+                                    label: 'Temp',
+                                    data: [],
+                                    backgroundColor: [
+                                        'rgba(255, 0, 0, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 0, 0, 0.5)'
+                                    ]
+                                }]
+                            },
+                            options: {}
+                        });
+                        idCanvas ++;
+                    break;
+                case 5:
+                        $("#canvas5").show();
+                        $('#canvas5').addClass('border border-danger');
+                        var ctx5 = document.getElementById('myChart5').getContext('2d');
+                        var myChart = new Chart(ctx5, {
+                            type: 'line',
+                            data: {
+                                labels: ['Temperatura'],
+                                datasets: [{
+                                    label: 'Temp',
+                                    data: [],
+                                    backgroundColor: [
+                                        'rgba(255, 0, 0, 1)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 0, 0, 0.5)'
+                                    ]
+                                }]
+                            },
+                            options: {}
+                        });
+                        idCanvas ++;
+                    break;
+                default:
+                    console.log('Ya no se puede agregar mas graficos!');
+            }
+
+        }
+
+
+        function grafico(tipo){
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -174,6 +356,127 @@
             },
             options: {}
         });
+
+
+        }
+
+
+
+
+        /*
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Temperatura'],
+                datasets: [{
+                    label: 'Temp',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)'
+                    ]
+                }]
+            },
+            options: {}
+        });
+        var ctx1 = document.getElementById('myChart1').getContext('2d');
+        var myChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Temperatura'],
+                datasets: [{
+                    label: 'Temp',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 0, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 0, 0, 0.5)'
+                    ]
+                }]
+            },
+            options: {}
+        });
+
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
+        var myChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Temperatura'],
+                datasets: [{
+                    label: 'Temp',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 0, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 0, 0, 0.5)'
+                    ]
+                }]
+            },
+            options: {}
+        });
+
+        var ctx3 = document.getElementById('myChart3').getContext('2d');
+        var myChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: ['Temperatura'],
+                datasets: [{
+                    label: 'Temp',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 0, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 0, 0, 0.5)'
+                    ]
+                }]
+            },
+            options: {}
+        });
+
+        var ctx4 = document.getElementById('myChart4').getContext('2d');
+        var myChart = new Chart(ctx4, {
+            type: 'line',
+            data: {
+                labels: ['Temperatura'],
+                datasets: [{
+                    label: 'Temp',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 0, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 0, 0, 0.5)'
+                    ]
+                }]
+            },
+            options: {}
+        });
+
+        var ctx5 = document.getElementById('myChart5').getContext('2d');
+        var myChart = new Chart(ctx5, {
+            type: 'line',
+            data: {
+                labels: ['Temperatura'],
+                datasets: [{
+                    label: 'Temp',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 0, 0, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 0, 0, 0.5)'
+                    ]
+                }]
+            },
+            options: {}
+        });*/
     
     
     </script>
