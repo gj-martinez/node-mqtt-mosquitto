@@ -17,6 +17,8 @@ app.get('/', (req, res, next) => {
   res.sendFile(__dirname + '/index.html')
 })
 
+app.use(express.static(__dirname + '/public'));
+
 client.on('connect', function () {
   client.subscribe('temperatura', function (err) {
     if (err) {
